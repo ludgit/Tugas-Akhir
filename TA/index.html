@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevCode - Belajar Pemrograman</title>
+
+    <!-- Tambahkan Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Menghilangkan scrollbar di semua browser */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* Untuk Internet Explorer dan Edge */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold">DevCode</a>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="kelas.html" class="hover:underline">Kelas</a></li>
+                    <li><a href="latihan.html" class="hover:underline">Latihan</a></li>
+                    <li><a href="kuis.html" class="hover:underline">Kuis</a></li>
+                </ul>
+            </nav>
+            <div>
+                <a href="masuk.html" class="bg-white text-blue-600 px-4 py-2 rounded-lg shadow-md hover:bg-gray-200">Masuk</a>
+                <a href="daftar.html" class="bg-blue-500 px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500">Daftar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-8">
+        <section id="home" class="text-center p-8 bg-white shadow-md rounded-lg">
+            <h1 class="text-3xl font-bold">Selamat Datang di DevCode</h1>
+            <p class="text-lg mt-2">Belajar pemrograman dengan cara yang interaktif dan menyenangkan!</p>
+        </section>
+
+        <section id="courses" class="mt-8">
+            <h2 class="text-2xl font-semibold text-center mb-6">Pilih Kelas Belajarmu</h2>
+            <div class="overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+                <div class="flex space-x-6 px-4 py-4 w-max">
+            
+            
+            <!-- Container Grid -->
+            <!--div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4"-->
+        
+                <!-- Kelas HTML -->
+                <div class="relative bg-white shadow-lg rounded-xl p-4 w-72 transform transition duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="flex justify-center">
+                        <img src="https://img.icons8.com/color/48/html-5--v1.png" alt="HTML" class="w-16">
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <img width="20" height="20" src="https://img.icons8.com/cute-clipart/64/document.png" alt="document"/>
+                            <span class="font-semibold">7 Materi</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mt-2">HTML</h3>
+                        <div class="flex items-center text-sm text-gray-500 mt-2">
+                            <img width="20" height="20" src="https://img.icons8.com/fluency/48/positive-dynamic.png" alt="positive-dynamic"/>
+                            <span class="text-green-500">&nbspPemula</span>
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <span class="text-red-500">✔ Sertifikat</span>
+                            <span class="ml-auto text-red-600 font-bold">GRATIS</span>
+                        </div>
+                    </div>
+                    <a href="assets/html/courses/html.html" class="mt-4 inline-block bg-orange-500 flex justify-center text-white px-20 py-3 rounded-lg shadow-md hover:bg-orange-600">Mulai</a>
+                </div>
+        
+                <!-- Kelas CSS -->
+                <div class="relative bg-white shadow-lg rounded-xl p-4 w-72 transform transition duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="flex justify-center">
+                        <img src="https://img.icons8.com/color/48/css3.png" alt="CSS" class="w-16">
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <img width="20" height="20" src="https://img.icons8.com/cute-clipart/64/document.png" alt="document"/>
+                            <span class="font-semibold">7 Materi</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mt-2">CSS</h3>
+                        <div class="flex items-center text-sm text-gray-500 mt-2">
+                            <img width="20" height="20" src="https://img.icons8.com/fluency/48/positive-dynamic.png" alt="positive-dynamic"/>
+                            <span class="text-green-500">&nbspPemula</span> 
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <span class="text-red-500">✔ Sertifikat</span>
+                            <span class="ml-auto text-red-600 font-bold">GRATIS</span>
+                        </div>
+                    </div>
+                    <a href="assets/html/courses/css.html" class="mt-4 inline-block bg-blue-500 flex justify-center text-white px-20 py-3 rounded-lg shadow-md hover:bg-blue-600">Mulai</a>
+                </div>
+        
+                <!-- Kelas JavaScript -->
+                <div class="relative bg-white shadow-lg rounded-xl p-4 w-72 transform transition duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="flex justify-center">
+                        <img src="https://img.icons8.com/color/48/javascript--v1.png" width="480" height="480" alt="JavaScript" class="w-16">
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <img width="20" height="20" src="https://img.icons8.com/cute-clipart/64/document.png" alt="document"/>
+                            <span class="font-semibold">11 Materi</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mt-2">JavaScript</h3>
+                        <div class="flex items-center text-sm text-gray-500 mt-2">
+                            <img width="20" height="20" src="https://img.icons8.com/fluency/48/positive-dynamic.png" alt="positive-dynamic"/>
+                            <span class="text-green-500">&nbspPemula</span> 
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <span class="text-red-500">✔ Sertifikat</span>
+                            <span class="ml-auto text-red-600 font-bold">GRATIS</span>
+                        </div>
+                    </div>
+                    <a href="assets/html/courses/js.html" class="mt-4 inline-block bg-yellow-500 flex justify-center text-white px-20 py-3 rounded-lg shadow-md hover:bg-yellow-600">Mulai</a>
+                </div>
+
+                <!-- Kelas Python -->
+                <div class="relative bg-white shadow-lg rounded-xl p-4 w-72 transform transition duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="flex justify-center">
+                        <img src="https://img.icons8.com/color/48/python--v1.png" width="480" height="480" alt="Python" class="w-16">
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <img width="20" height="20" src="https://img.icons8.com/cute-clipart/64/document.png" alt="document"/>
+                            <span class="font-semibold">11 Materi</span>
+                        </div>
+                        <h3 class="text-lg mt-2 font-semibold">Python</h3>
+                        <div class="flex items-center text-sm text-gray-500 mt-2">
+                            <img width="20" height="20" src="https://img.icons8.com/fluency/48/positive-dynamic.png" alt="positive-dynamic"/>
+                            <span class="text-green-500">&nbspPemula</span> 
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <span class="text-red-500">✔ Sertifikat</span>
+                            <span class="ml-auto text-red-600 font-bold">GRATIS</span>
+                        </div>
+                    </div>
+                    <a href="assets/html/courses/python.html" class="mt-4 inline-block bg-red-600 flex justify-center text-white px-20 py-3 rounded-lg shadow-md hover:bg-red-700">Mulai</a>
+                </div>
+            </div>
+            </div>
+        </section>
+        
+
+        <section id="practice" class="mt-8 text-center p-8 bg-white shadow-md rounded-lg">
+            <h2 class="text-2xl font-semibold">Latihan Interaktif</h2>
+            <p class="mt-2">Coba kode Anda langsung di browser!</p>
+            <a href="/assets/html/latihan/html/latihan1.html" class="mt-4 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700">Mulai Latihan</a>
+        </section>
+
+        <section id="quiz" class="mt-8 text-center p-8 bg-white shadow-md rounded-lg">
+            <h2 class="text-2xl font-semibold">Kuis Pemrograman</h2>
+            <p class="mt-2">Uji pemahaman Anda dengan kuis interaktif.</p>
+            <a href="kuis.html" class="mt-4 inline-block bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700">Mulai Kuis</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+        <p>&copy; 2025 DevCode. Semua Hak Dilindungi.</p>
+    </footer>
+</body>
+</html>
