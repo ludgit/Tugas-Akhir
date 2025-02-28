@@ -51,60 +51,72 @@
     </section>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        fetch("assets/json/kelas.json")
-          .then(response => response.json())
-          .then(data => {
-            const kelasContainer = document.getElementById("kelasContainer");
-            kelasContainer.innerHTML = ""; // Kosongkan container
-
-            data.forEach(kelas => {
-              // Tentukan kelas warna untuk level
-              let levelColorClass = 'text-gray-500';
-              const levelLower = kelas.level.toLowerCase();
-              if (levelLower === 'pemula') {
-                levelColorClass = 'text-green-500';
-              } else if (levelLower === 'menengah') {
-                levelColorClass = 'text-yellow-500';
-              } else if (levelLower === 'mahir') {
-                levelColorClass = 'text-red-500';
-              }
-
-              kelasContainer.innerHTML += `
-                <div class="min-w-[250px] bg-white shadow-lg rounded-xl p-4 text-center transition transform hover:scale-105">
-                  <img src="${kelas.icon}" alt="${kelas.nama}" class="mx-auto w-16">
-                  <h3 class="text-lg font-semibold mt-2">${kelas.nama}</h3>
-                  <p class="text-gray-500 text-sm">${kelas.materi} Materi</p>
-                  <p class="${levelColorClass} text-sm">${kelas.level}</p>
-                  <p class="text-red-600 font-bold">${kelas.price}</p>
-                  <a href="${kelas.link}" class="mt-4 block bg-${kelas.warna}-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-${kelas.warna}-600">Mulai</a>
-                </div>
-              `;
-            });
-
-            // Panggil fungsi autoScroll setelah data dimuat
-            autoScroll();
-          })
-          .catch(error => console.error("Error fetching kelas data:", error));
-      });
-
-      // Fungsi auto-scroll dengan efek bounce
-      function autoScroll() {
-        const wrapper = document.getElementById("kelasWrapper");
-        let direction = 1; // 1 = ke kanan, -1 = ke kiri
-        const speed = 1;   // kecepatan scroll (piksel per interval)
-        const interval = 20; // interval dalam milidetik
-
-        setInterval(() => {
-          wrapper.scrollLeft += direction * speed;
-          if (wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth) {
-            direction = -1;
-          } else if (wrapper.scrollLeft <= 0) {
-            direction = 1;
-          }
-        }, interval);
-      }
-    </script>
+        let autoScrollInterval;
+      
+        function startAutoScroll() {
+          const wrapper = document.getElementById("kelasWrapper");
+          let direction = 1;    // 1 = ke kanan, -1 = ke kiri
+          const speed = 1;      // kecepatan scroll (piksel per step)
+          const interval = 20;  // interval waktu per step (ms)
+      
+          autoScrollInterval = setInterval(() => {
+            wrapper.scrollLeft += direction * speed;
+      
+            if (wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth) {
+              direction = -1;
+            } else if (wrapper.scrollLeft <= 0) {
+              direction = 1;
+            }
+          }, interval);
+        }
+      
+        document.addEventListener("DOMContentLoaded", function () {
+          fetch("assets/json/kelas.json")
+            .then(response => response.json())
+            .then(data => {
+              const kelasContainer = document.getElementById("kelasContainer");
+              kelasContainer.innerHTML = ""; // Kosongkan container
+      
+              data.forEach(kelas => {
+                // Tentukan kelas warna untuk level
+                let levelColorClass = 'text-gray-500';
+                const levelLower = kelas.level.toLowerCase();
+                if (levelLower === 'pemula') {
+                  levelColorClass = 'text-green-500';
+                } else if (levelLower === 'menengah') {
+                  levelColorClass = 'text-yellow-500';
+                } else if (levelLower === 'mahir') {
+                  levelColorClass = 'text-red-500';
+                }
+      
+                kelasContainer.innerHTML += `
+                  <div class="min-w-[250px] bg-white shadow-lg rounded-xl p-4 text-center transition transform hover:scale-105">
+                    <img src="${kelas.icon}" alt="${kelas.nama}" class="mx-auto w-16">
+                    <h3 class="text-lg font-semibold mt-2">${kelas.nama}</h3>
+                    <p class="text-gray-500 text-sm">${kelas.materi} Materi</p>
+                    <p class="${levelColorClass} text-sm">${kelas.level}</p>
+                    <p class="text-red-600 font-bold">${kelas.price}</p>
+                    <a href="${kelas.link}" class="mt-4 block bg-${kelas.warna}-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-${kelas.warna}-600">Mulai</a>
+                  </div>
+                `;
+              });
+      
+              // Mulai auto-scroll
+              startAutoScroll();
+      
+              // Tambahkan event listener untuk menghentikan auto-scroll saat hover
+              const wrapper = document.getElementById("kelasWrapper");
+              wrapper.addEventListener("mouseenter", () => {
+                clearInterval(autoScrollInterval);
+              });
+              wrapper.addEventListener("mouseleave", () => {
+                startAutoScroll();
+              });
+            })
+            .catch(error => console.error("Error fetching kelas data:", error));
+        });
+      </script>
+      
 
     <section id="practice" class="mt-8 text-center p-8 bg-white shadow-md rounded-lg">
       <h2 class="text-2xl font-semibold">Latihan Interaktif</h2>
