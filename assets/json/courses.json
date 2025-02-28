@@ -1,6 +1,0 @@
-[
-    { "title": "HTML", "lessons": 7, "level": "Pemula", "category": "HTML" },
-    { "title": "CSS", "lessons": 7, "level": "Pemula", "category": "CSS" },
-    { "title": "JavaScript", "lessons": 11, "level": "Menengah", "category": "JavaScript" },
-    { "title": "Python", "lessons": 11, "level": "Pemula", "category": "Python" }
-]
