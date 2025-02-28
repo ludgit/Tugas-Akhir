@@ -1,0 +1,63 @@
+[
+    {
+      "nama": "HTML",
+      "icon": "https://img.icons8.com/color/48/html-5--v1.png",
+      "materi": 7,
+      "level": "Pemula",
+      "sertifikat": true,
+      "price": "GRATIS",
+      "link": "assets/html/courses/html.html",
+      "warna": "orange"
+    },
+    {
+      "nama": "CSS",
+      "icon": "https://img.icons8.com/color/48/css3.png",
+      "materi": 7,
+      "level": "Pemula",
+      "sertifikat": true,
+      "price": "GRATIS",
+      "link": "assets/html/courses/css.html",
+      "warna": "blue"
+    },
+    {
+      "nama": "JavaScript",
+      "icon": "https://img.icons8.com/color/48/javascript--v1.png",
+      "materi": 11,
+      "level": "Pemula",
+      "sertifikat": true,
+      "price": "GRATIS",
+      "link": "assets/html/courses/js.html",
+      "warna": "yellow"
+    },
+    {
+      "nama": "Python",
+      "icon": "https://img.icons8.com/color/48/python--v1.png",
+      "materi": 11,
+      "level": "Pemula",
+      "sertifikat": true,
+      "price": "GRATIS",
+      "link": "assets/html/courses/python.html",
+      "warna": "red"
+    },
+    {
+      "nama": "Python Lanjutan",
+      "icon": "https://img.icons8.com/color/48/python--v1.png",
+      "materi": 6,
+      "level": "Menengah",
+      "sertifikat": true,
+      "price": "GRATIS",
+      "link": "assets/html/courses/python-lanjutan.html",
+      "warna": "red"
+    },
+    {
+      "nama": "JavaScript Lanjutan",
+      "icon": "https://img.icons8.com/color/48/javascript--v1.png",
+      "materi": 11,
+      "level": "Menengah",
+      "sertifikat": true,
+      "price": "GRATIS",
+      "link": "assets/html/courses/js-expert.html",
+      "warna": "yellow"
+    }
+  ]
+  

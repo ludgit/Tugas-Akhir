@@ -1,95 +1,114 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Hilangkan scrollbar */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Kelas</h1>
 
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-6">Kelas</h1>
-
-        <!-- Filter Kategori -->
-        <div class="flex space-x-2 mb-6">
-            <button onclick="filterCourses(event, 'Semua')" class="filter-btn bg-blue-500 text-white px-4 py-2 rounded-lg">Semua</button>
-            <button onclick="filterCourses(event, 'HTML')" class="filter-btn bg-gray-200 px-4 py-2 rounded-lg">HTML</button>
-            <button onclick="filterCourses(event, 'CSS')" class="filter-btn bg-gray-200 px-4 py-2 rounded-lg">CSS</button>
-            <button onclick="filterCourses(event, 'JavaScript')" class="filter-btn bg-gray-200 px-4 py-2 rounded-lg">JavaScript</button>
-            <button onclick="filterCourses(event, 'Python')" class="filter-btn bg-gray-200 px-4 py-2 rounded-lg">Python</button>
-        </div>
-
-        <!-- Daftar Kelas -->
-        <div id="courseContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Kelas akan dimuat melalui JavaScript -->
-        </div>
+    <!-- Input Pencarian -->
+    <div class="mb-4">
+      <input type="text" id="searchInput" onkeyup="searchCourses()" 
+        class="w-full p-2 border rounded-lg" placeholder="Cari kelas...">
     </div>
 
-    <script>
-        const courses = [
-            { title: "HTML", lessons: 7, level: "Pemula", certificate: true, category: "HTML" },
-            { title: "CSS", lessons: 7, level: "Pemula", certificate: true, category: "CSS" },
-            { title: "JavaScript", lessons: 11, level: "Menengah", certificate: true, category: "JavaScript" },
-            { title: "Python", lessons: 11, level: "Pemula", certificate: true, category: "Python" },
-        ];
+    <!-- Filter Berdasarkan Level (Tanpa Panah) -->
+    <div class="flex items-center mb-6">
+      <div id="filterContainer" class="flex space-x-2 hide-scrollbar overflow-x-auto">
+        <button onclick="filterCourses(event, 'Semua')" class="filter-btn bg-blue-500 text-white px-4 py-2 rounded-lg">Semua</button>
+        <button onclick="filterCourses(event, 'Pemula')" class="filter-btn bg-gray-200 px-4 py-2 rounded-lg">Pemula</button>
+        <button onclick="filterCourses(event, 'Menengah')" class="filter-btn bg-gray-200 px-4 py-2 rounded-lg">Menengah</button>
+      </div>
+    </div>
 
-        const courseLogos = {
-            "HTML": "https://img.icons8.com/color/48/html-5--v1.png",
-            "CSS": "https://img.icons8.com/color/48/css3.png",
-            "JavaScript": "https://img.icons8.com/color/48/javascript--v1.png",
-            "Python": "https://img.icons8.com/color/48/python--v1.png",
-        };
+    <!-- Daftar Kelas -->
+    <div id="courseContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Kelas akan dimuat melalui JavaScript -->
+    </div>
+  </div>
 
-        function loadCourses(category = "Semua") {
-            const container = document.getElementById("courseContainer");
-            container.innerHTML = "";
+  <script>
+    let courses = [];
 
-            const filteredCourses = category === "Semua" ? courses : courses.filter(course => course.category === category);
+    // Load courses dari JSON
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("../json/kelas.json")
+        .then(response => response.json())
+        .then(data => {
+          courses = data;
+          loadCourses(); // Tampilkan semua kelas awal
+        })
+        .catch(error => console.error("Error fetching courses:", error));
+    });
 
-            filteredCourses.forEach(course => {
-                const coursePath = `courses/${course.category.toLowerCase()}.html`;
-                const courseCard = `
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col justify-between">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-xl font-semibold mr-4">${course.title}</h3>
-                            <img src="${courseLogos[course.category]}" alt="${course.title}" class="w-12 h-12 mt-1">
-                        </div>
+    function loadCourses(filter = "Semua", searchQuery = "") {
+      const container = document.getElementById("courseContainer");
+      container.innerHTML = "";
 
-                        <div class="mt-3 flex items-center">
-                            <img src="https://img.icons8.com/cute-clipart/64/document.png" alt="Materi" class="w-5 mr-2" />
-                            <span class="text-gray-600">${course.lessons} Materi</span>
-                        </div>
+      const filteredCourses = courses.filter(course => {
+        const matchLevel = filter === "Semua" || course.level.toLowerCase() === filter.toLowerCase();
+        const matchSearch = course.nama.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchLevel && matchSearch;
+      });
+
+      filteredCourses.forEach(course => {
+        const courseCard = `
+          <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold mr-4">${course.nama}</h3>
+              <img src="${course.icon}" alt="${course.nama}" class="w-12 h-12 mt-1">
+            </div>
+
+            <div class="mt-3 flex items-center">
+              <img src="https://img.icons8.com/cute-clipart/64/document.png" alt="Materi" class="w-5 mr-2" />
+              <span class="text-gray-600">${course.materi} Materi</span>
+            </div>
                         
-                        <div class="mt-2 flex items-center">
-                            <img src="https://img.icons8.com/fluency/48/positive-dynamic.png" alt="Level" class="w-5 mr-2"/>
-                            <span class="text-green-500">${course.level}</span>
-                        </div>
+            <div class="mt-2 flex items-center">
+              <img src="https://img.icons8.com/fluency/48/positive-dynamic.png" alt="Level" class="w-5 mr-2"/>
+              <span class="${course.level.toLowerCase() === 'pemula' ? 'text-green-500' : 'text-yellow-500'}">
+                ${course.level}
+              </span>
+            </div>
+            <p class="mt-2 text-red-600 font-bold">${course.price}</p>
 
-                        <p class="mt-2 ${course.certificate ? 'text-red-500' : 'text-gray-400'}">✔ Sertifikat</p>
-                        <p class="mt-2 text-red-600 font-bold">GRATIS</p>
+            <a href="${course.link}" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition text-center block">
+              Lihat Kelas
+            </a>
+          </div>
+        `;
+        container.innerHTML += courseCard;
+      });
+    }
 
-                        <a href="${coursePath}" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition text-center block">
-                            Lihat Kelas
-                        </a>
-                    </div>
-                `;
-                container.innerHTML += courseCard;
-            });
-        }
+    function filterCourses(event, filter) {
+      loadCourses(filter);
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("bg-blue-500", "text-white");
+        btn.classList.add("bg-gray-200");
+      });
+      event.target.classList.add("bg-blue-500", "text-white");
+      event.target.classList.remove("bg-gray-200");
+    }
 
-        function filterCourses(event, category) {
-            loadCourses(category);
-            document.querySelectorAll(".filter-btn").forEach(btn => {
-                btn.classList.remove("bg-blue-500", "text-white");
-                btn.classList.add("bg-gray-200");
-            });
-            event.target.classList.add("bg-blue-500", "text-white");
-            event.target.classList.remove("bg-gray-200");
-        }
-
-        document.addEventListener("DOMContentLoaded", () => loadCourses());
-    </script>
-
+    function searchCourses() {
+      const query = document.getElementById("searchInput").value;
+      loadCourses("Semua", query);
+    }
+  </script>
 </body>
 </html>
