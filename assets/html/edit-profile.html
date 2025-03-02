@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Profil - DevCode</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -14,10 +16,19 @@
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
-  <!-- Header -->
+  <!-- Header (sama dengan file profile.html) -->
   <header class="bg-blue-600 text-white p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
-      <a href="../../index.html" class="text-2xl font-bold">DevCode</a>
+      <a href="index.html" class="text-2xl font-bold">DevCode</a>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="kelas.html" class="hover:underline">Kelas</a></li>
+          <li><a href="latihan/option.html" class="hover:underline">Latihan</a></li>
+          <li><a href="kuis/kuis1.html" class="hover:underline">Kuis</a></li>
+          <li><a href="profile.html" class="hover:underline">Profil</a></li>
+          <li><a href="#" onclick="logout()" class="hover:underline">Logout</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
@@ -57,18 +68,36 @@
   </footer>
 
   <script>
+    // Saat halaman dimuat, periksa autentikasi dan isi form edit profil
     document.addEventListener("DOMContentLoaded", function () {
-      const username = localStorage.getItem("username");
-      if (username) {
-        document.getElementById("username").value = username;
+      const token = sessionStorage.getItem("auth0_token");
+      const profile = sessionStorage.getItem("auth0_profile");
+
+      if (!token || !profile) {
+        // Jika data autentikasi tidak ada, alihkan ke login
+        window.location.href = "login.html";
+        return;
       }
+      
+      try {
+        const user = JSON.parse(profile);
+        // Gunakan properti 'nickname' jika tersedia untuk username, jika tidak, gunakan 'name'
+        document.getElementById("username").value = user.nickname || user.name || "Tidak diketahui";
+        // Isi field fullname dengan nama lengkap (dari properti 'name')
+        document.getElementById("fullname").value = user.name || "Tidak diketahui";
+      } catch (error) {
+        console.error("Error parsing auth0_profile:", error);
+        window.location.href = "login.html";
+      }
+
+      // Tangani submit form untuk update profil
       document.getElementById("editProfileForm").addEventListener("submit", function (e) {
         e.preventDefault();
         const fullname = document.getElementById("fullname").value.trim();
         const oldPassword = document.getElementById("oldPassword").value.trim();
         const newPassword = document.getElementById("newPassword").value.trim();
         const confirmNewPassword = document.getElementById("confirmNewPassword").value.trim();
-        
+
         if (newPassword || confirmNewPassword || oldPassword) {
           if (!oldPassword) {
             Swal.fire("Gagal!", "Harap masukkan password lama untuk mengganti password.", "error");
@@ -79,9 +108,30 @@
             return;
           }
         }
-        Swal.fire("Sukses!", "Perubahan berhasil disimpan!", "success");
+        // Simulasikan penyimpanan perubahan. Di implementasi nyata, Anda perlu memanggil API manajemen pengguna Auth0.
+        Swal.fire("Sukses!", "Perubahan berhasil disimpan!", "success").then(() => {
+          // Update data profil di sessionStorage (misalnya, perbarui nama lengkap)
+          try {
+            let user = JSON.parse(sessionStorage.getItem("auth0_profile"));
+            user.name = fullname;
+            sessionStorage.setItem("auth0_profile", JSON.stringify(user));
+          } catch (error) {
+            console.error("Error updating profile:", error);
+          }
+          // Arahkan kembali ke halaman profil
+          window.location.href = "profile.html";
+        });
       });
     });
+
+    // Fungsi logout: hapus data autentikasi dan alihkan ke login.html
+    function logout() {
+      sessionStorage.removeItem("auth0_token");
+      sessionStorage.removeItem("auth0_profile");
+      Swal.fire("Logout Berhasil!", "Anda telah logout.", "success").then(() => {
+        window.location.href = "login.html";
+      });
+    }
   </script>
 </body>
 </html>

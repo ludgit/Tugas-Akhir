@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DevCode - Profil Pengguna</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-
 <body class="bg-gray-100 text-gray-900 flex flex-col min-h-screen">
   <!-- Header -->
   <header class="bg-blue-600 text-white p-4 shadow-md">
@@ -24,10 +17,11 @@
       <a href="index.html" class="text-2xl font-bold">DevCode</a>
       <nav>
         <ul class="flex space-x-4">
-          <li><a href="assets/html/kelas.html" class="hover:underline">Kelas</a></li>
-          <li><a href="assets/html/latihan/option.html" class="hover:underline">Latihan</a></li>
-          <li><a href="assets/html/kuis/kuis1.html" class="hover:underline">Kuis</a></li>
+          <li><a href="kelas.html" class="hover:underline">Kelas</a></li>
+          <li><a href="latihan/option.html" class="hover:underline">Latihan</a></li>
+          <li><a href="kuis/kuis1.html" class="hover:underline">Kuis</a></li>
           <li><a href="profile.html" class="hover:underline">Profil</a></li>
+          <li><a href="#" onclick="logout()" class="hover:underline">Logout</a></li>
         </ul>
       </nav>
     </div>
@@ -40,15 +34,11 @@
       <div class="mt-6">
         <div class="flex justify-between mb-4">
           <span class="font-semibold">Nama:</span>
-          <span>John Doe</span>
+          <span id="userName">Loading...</span>
         </div>
         <div class="flex justify-between mb-4">
           <span class="font-semibold">Email:</span>
-          <span>johndoe@example.com</span>
-        </div>
-        <div class="flex justify-between mb-4">
-          <span class="font-semibold">Level:</span>
-          <span>Menengah</span>
+          <span id="userEmail">Loading...</span>
         </div>
       </div>
       <!-- Button to Edit Profile -->
@@ -62,5 +52,35 @@
   <footer class="bg-gray-800 text-white text-center p-4 mt-auto">
     <p>&copy; 2025 DevCode. Semua Hak Dilindungi.</p>
   </footer>
+
+  <script>
+    // Saat halaman profile.html dimuat, periksa apakah ada token dan profil di sessionStorage
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = sessionStorage.getItem("auth0_token");
+      const profile = sessionStorage.getItem("auth0_profile");
+
+      if (!token || !profile) {
+        // Jika data autentikasi tidak ada, alihkan ke halaman login
+        window.location.href = "../../login.html";
+      } else {
+        try {
+          const user = JSON.parse(profile);
+          document.getElementById("userName").textContent = user.name || "Tidak diketahui";
+          document.getElementById("userEmail").textContent = user.email || "Tidak diketahui";
+        } catch (error) {
+          console.error("Error parsing auth0_profile:", error);
+          window.location.href = "../../login.html";
+        }
+      }
+    });
+
+    // Fungsi logout: hapus data dari sessionStorage dan alihkan ke halaman login
+    function logout() {
+      sessionStorage.removeItem("auth0_token");
+      sessionStorage.removeItem("auth0_profile");
+      alert("Anda telah logout.");
+      window.location.href = "../../login.html";
+    }
+  </script>
 </body>
 </html>

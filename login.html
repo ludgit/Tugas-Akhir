@@ -11,7 +11,7 @@
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- Auth0 SDK -->
+  <!-- Auth0 SDK versi 9.18 -->
   <script src="https://cdn.auth0.com/js/auth0/9.18/auth0.min.js"></script>
 
   <style>
@@ -33,9 +33,13 @@
   <div id="formContainer" class="bg-white p-8 rounded-lg shadow-lg w-96 form-container">
     <h2 class="text-2xl font-bold mb-6 text-center">Login ke DevCode</h2>
 
-    <button id="auth0Login" class="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition">Login dengan Auth0</button>
+    <button id="auth0Login" class="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition">
+      Login dengan Auth0
+    </button>
     
-    <button id="auth0Logout" class="w-full bg-red-600 text-white py-3 rounded hover:bg-red-700 transition mt-3 hidden">Logout</button>
+    <button id="auth0Logout" class="w-full bg-red-600 text-white py-3 rounded hover:bg-red-700 transition mt-3 hidden">
+      Logout
+    </button>
   </div>
 
   <script>
@@ -49,16 +53,17 @@
         }
         const config = await response.json();
 
+        // Inisialisasi Auth0 Client menggunakan WebAuth dari Auth0 versi 9.18
         auth0Client = new auth0.WebAuth({
           domain: config.domain,
           clientID: config.clientId,
-          // Pastikan callback.html ada atau sesuaikan dengan Allowed Callback URL di Auth0
+          // Pastikan callback.html sudah dikonfigurasi di dashboard Auth0 sebagai Allowed Callback URL
           redirectUri: window.location.origin + "/callback.html",
           responseType: "token id_token",
           scope: "openid profile email"
         });
 
-        // Proses callback jika ada hash di URL
+        // Tangani proses callback jika terdapat hash pada URL
         handleAuthentication();
       } catch (error) {
         console.error("Gagal memuat konfigurasi Auth0:", error);
@@ -66,6 +71,7 @@
       }
     }
 
+    // Tangani klik pada tombol Login
     document.getElementById("auth0Login").addEventListener("click", function() {
       if (auth0Client) {
         auth0Client.authorize();
@@ -74,7 +80,9 @@
       }
     });
 
+    // Tangani klik pada tombol Logout
     document.getElementById("auth0Logout").addEventListener("click", function() {
+      // Hapus token dan profil dari sessionStorage (atau mekanisme penyimpanan lain jika digunakan)
       sessionStorage.removeItem("auth0_token");
       sessionStorage.removeItem("auth0_profile");
 
@@ -83,6 +91,7 @@
       });
     });
 
+    // Fungsi untuk memproses callback Auth0
     function handleAuthentication() {
       if (!auth0Client) return;
       auth0Client.parseHash((err, authResult) => {
@@ -101,6 +110,7 @@
       });
     }
 
+    // Perbarui UI berdasarkan status autentikasi
     function updateUI() {
       const token = sessionStorage.getItem("auth0_token");
       if (token) {
@@ -112,7 +122,8 @@
       }
     }
 
-    loadAuthConfig(); // Panggil saat halaman dimuat
+    // Panggil konfigurasi saat halaman dimuat
+    loadAuthConfig();
   </script>
 
 </body>
