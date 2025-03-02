@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Sign Up - DevCode (Auth0)</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Auth0 SDK -->
+  <script src="https://cdn.auth0.com/js/auth0/9.18/auth0.min.js"></script>
+
+  <style>
+    body {
+      background-color: #3b82f6; /* blue-500 */
+    }
+    .form-container {
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+  <!-- Header -->
+  <header class="mb-6 text-center">
+    <h1 class="text-4xl font-bold text-white">DevCode</h1>
+  </header>
+
+  <!-- Form Container -->
+  <div id="formContainer" class="bg-white p-8 rounded-lg shadow-lg w-96 form-container">
+    <h2 class="text-2xl font-bold mb-6 text-center">Login ke DevCode</h2>
+
+    <button id="auth0Login" class="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition">Login dengan Auth0</button>
+    
+    <button id="auth0Logout" class="w-full bg-red-600 text-white py-3 rounded hover:bg-red-700 transition mt-3 hidden">Logout</button>
+  </div>
+
+  <script>
+    let auth0Client;
+
+    async function loadAuthConfig() {
+      try {
+        const response = await fetch("assets/json/auth_config.json");
+        if (!response.ok) {
+          throw new Error("Gagal memuat konfigurasi (status " + response.status + ")");
+        }
+        const config = await response.json();
+
+        auth0Client = new auth0.WebAuth({
+          domain: config.domain,
+          clientID: config.clientId,
+          // Pastikan callback.html ada atau sesuaikan dengan Allowed Callback URL di Auth0
+          redirectUri: window.location.origin + "/callback.html",
+          responseType: "token id_token",
+          scope: "openid profile email"
+        });
+
+        // Proses callback jika ada hash di URL
+        handleAuthentication();
+      } catch (error) {
+        console.error("Gagal memuat konfigurasi Auth0:", error);
+        Swal.fire("Error", "Tidak bisa memuat konfigurasi autentikasi!", "error");
+      }
+    }
+
+    document.getElementById("auth0Login").addEventListener("click", function() {
+      if (auth0Client) {
+        auth0Client.authorize();
+      } else {
+        Swal.fire("Error", "Auth0 belum siap, coba lagi.", "error");
+      }
+    });
+
+    document.getElementById("auth0Logout").addEventListener("click", function() {
+      sessionStorage.removeItem("auth0_token");
+      sessionStorage.removeItem("auth0_profile");
+
+      Swal.fire("Logout Berhasil!", "Anda telah keluar.", "success").then(() => {
+        updateUI();
+      });
+    });
+
+    function handleAuthentication() {
+      if (!auth0Client) return;
+      auth0Client.parseHash((err, authResult) => {
+        if (err) {
+          console.error("Error autentikasi:", err);
+          Swal.fire("Error", "Gagal melakukan autentikasi!", "error");
+          return;
+        }
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          sessionStorage.setItem("auth0_token", authResult.accessToken);
+          sessionStorage.setItem("auth0_profile", JSON.stringify(authResult.idTokenPayload));
+          Swal.fire("Login Berhasil!", "Selamat datang di DevCode!", "success").then(() => {
+            updateUI();
+          });
+        }
+      });
+    }
+
+    function updateUI() {
+      const token = sessionStorage.getItem("auth0_token");
+      if (token) {
+        document.getElementById("auth0Login").classList.add("hidden");
+        document.getElementById("auth0Logout").classList.remove("hidden");
+      } else {
+        document.getElementById("auth0Login").classList.remove("hidden");
+        document.getElementById("auth0Logout").classList.add("hidden");
+      }
+    }
+
+    loadAuthConfig(); // Panggil saat halaman dimuat
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Callback - DevCode</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Auth0 SDK CDN -->
+  <script src="https://cdn.auth0.com/js/auth0/9.18/auth0.min.js"></script>
+  <style>
+    body {
+      background-color: #f7fafc; /* bg-gray-100 */
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="text-center p-8">
+    <h1 class="text-3xl font-bold mb-4">Memproses Login...</h1>
+    <p>Mohon tunggu, Anda sedang diarahkan...</p>
+  </div>
+
+  <script>
+    async function loadAuthConfig() {
+      try {
+        const response = await fetch("assets/json/auth_config.json");
+        if (!response.ok) {
+          throw new Error("Gagal memuat konfigurasi (status " + response.status + ")");
+        }
+        return await response.json();
+      } catch (error) {
+        console.error("Error loading auth config:", error);
+        Swal.fire("Error", "Konfigurasi autentikasi gagal dimuat.", "error");
+      }
+    }
+
+    async function handleCallback() {
+      const config = await loadAuthConfig();
+      if (!config) return; // Jika gagal, hentikan proses
+
+      const auth0Client = new auth0.WebAuth({
+        domain: config.domain,
+        clientID: config.clientId,
+        redirectUri: window.location.origin + "/callback.html", // Pastikan ini sesuai dengan Allowed Callback URLs di Auth0 Dashboard
+        responseType: "token id_token",
+        scope: "openid profile email"
+      });
+
+      auth0Client.parseHash((err, authResult) => {
+        if (err) {
+          console.error("Error in parseHash:", err);
+          Swal.fire("Error", "Gagal memproses login!", "error");
+          return;
+        }
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          sessionStorage.setItem("auth0_token", authResult.accessToken);
+          sessionStorage.setItem("auth0_profile", JSON.stringify(authResult.idTokenPayload));
+          Swal.fire("Login Berhasil!", "Selamat datang di DevCode!", "success").then(() => {
+            window.location.href = window.location.origin; // Redirect ke halaman utama
+          });
+        } else {
+          Swal.fire("Error", "Token tidak ditemukan.", "error");
+        }
+      });
+    }
+
+    handleCallback();
+  </script>
+</body>
+</html>

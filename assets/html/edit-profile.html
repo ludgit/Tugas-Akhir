@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profil - DevCode</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    main { flex: 1; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="../../index.html" class="text-2xl font-bold">DevCode</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto mt-8 p-6 bg-white shadow-md rounded-lg max-w-lg">
+    <h2 class="text-2xl font-bold text-center mb-4">Edit Profil</h2>
+    <form id="editProfileForm">
+      <div class="mb-4">
+        <label class="block font-semibold">Username</label>
+        <input type="text" id="username" class="w-full p-2 border rounded bg-gray-200 cursor-not-allowed" readonly>
+      </div>
+      <div class="mb-4">
+        <label class="block font-semibold">Nama Lengkap</label>
+        <input type="text" id="fullname" class="w-full p-2 border rounded">
+      </div>
+      <h3 class="text-xl font-semibold mt-6 mb-2">Ubah Password</h3>
+      <div class="mb-4">
+        <label class="block font-semibold">Password Lama</label>
+        <input type="password" id="oldPassword" class="w-full p-2 border rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block font-semibold">Password Baru</label>
+        <input type="password" id="newPassword" class="w-full p-2 border rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block font-semibold">Konfirmasi Password Baru</label>
+        <input type="password" id="confirmNewPassword" class="w-full p-2 border rounded">
+      </div>
+      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Simpan Perubahan</button>
+      <a href="profile.html" class="block text-center mt-4 text-blue-600 hover:underline">Kembali</a>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+    <p>&copy; 2025 DevCode. Semua Hak Dilindungi.</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const username = localStorage.getItem("username");
+      if (username) {
+        document.getElementById("username").value = username;
+      }
+      document.getElementById("editProfileForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const fullname = document.getElementById("fullname").value.trim();
+        const oldPassword = document.getElementById("oldPassword").value.trim();
+        const newPassword = document.getElementById("newPassword").value.trim();
+        const confirmNewPassword = document.getElementById("confirmNewPassword").value.trim();
+        
+        if (newPassword || confirmNewPassword || oldPassword) {
+          if (!oldPassword) {
+            Swal.fire("Gagal!", "Harap masukkan password lama untuk mengganti password.", "error");
+            return;
+          }
+          if (newPassword !== confirmNewPassword) {
+            Swal.fire("Gagal!", "Password baru dan konfirmasi password tidak cocok.", "error");
+            return;
+          }
+        }
+        Swal.fire("Sukses!", "Perubahan berhasil disimpan!", "success");
+      });
+    });
+  </script>
+</body>
+</html>
