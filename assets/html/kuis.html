@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Kuis - DevCode</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="/index.html" class="text-2xl font-bold">DevCode</a>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="/assets/html/kelas.html" class="hover:underline">Kelas</a></li>
+          <li><a href="/assets/html/latihan/option.html" class="hover:underline">Latihan</a></li>
+          <li><a href="/assets/html/kuis.html" class="hover:underline">Kuis</a></li>
+          <li><a href="/assets/html/profile.html" class="hover:underline">Profil</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto mt-8">
+    <section class="bg-white shadow-md rounded-lg p-8">
+      <h2 class="text-3xl font-bold text-center mb-4">Menu Kuis</h2>
+      <p class="text-center mb-6">
+        Bacalah petunjuk dengan seksama sebelum memulai kuis.
+        Pilih kuis yang ingin kamu kerjakan di bawah ini.
+      </p>
+      
+      <!-- Daftar Kuis -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Kartu Quiz 1 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Kuis Dasar Pemrograman</h3>
+          <p class="mb-4">
+            Uji pengetahuan dasar pemrograman Anda melalui soal-soal yang telah disiapkan.
+          </p>
+          <a href="/assets/html/kuis/kuis1.html" class="block bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-700">
+            Mulai Kuis
+          </a>
+        </div>
+        <!-- Kartu Quiz 2 (opsional) -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Kuis Lanjutan</h3>
+          <p class="mb-4">
+            Tantang diri Anda dengan soal-soal tingkat lanjutan yang menguji pemahaman mendalam.
+          </p>
+          <a href="/assets/html/kuis/kuis2.html" class="block bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-700">
+            Mulai Kuis
+          </a>
+        </div>
+      </div>
+
+      <!-- Petunjuk tambahan (opsional) -->
+      <div class="mt-8 bg-blue-50 p-4 rounded-lg">
+        <h4 class="text-lg font-semibold mb-2">Petunjuk:</h4>
+        <ul class="list-disc list-inside text-sm">
+          <li>Baca setiap soal dengan teliti.</li>
+          <li>Perhatikan batas waktu jika ada.</li>
+          <li>Pastikan koneksi internet stabil selama mengerjakan kuis.</li>
+          <li>Hasil kuis akan langsung ditampilkan setelah selesai.</li>
+        </ul>
+      </div>
+
+      <!-- Navigasi kembali -->
+      <div class="text-center mt-8">
+        <a href="/index.html" class="text-blue-600 hover:underline">Kembali ke Beranda</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+    <p>&copy; 2025 DevCode. Semua Hak Dilindungi.</p>
+  </footer>
+</body>
+</html>
