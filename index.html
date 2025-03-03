@@ -21,20 +21,20 @@
   <!-- Proteksi Halaman: jika tidak ada token, redirect ke halaman login -->
   <script>
     if (!sessionStorage.getItem("auth0_token")) {
-      window.location.href = "/login.html"; // Pastikan file login.html sudah dibuat
+      window.location.href = "/Tugas-Akhir/login.html"; // Pastikan file login.html sudah dibuat
     }
   </script>
 
   <!-- Header -->
   <header class="bg-blue-600 text-white p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-bold">DevCode</a>
+      <a href="/Tugas-Akhir/index.html" class="text-2xl font-bold">DevCode</a>
       <nav>
         <ul class="flex space-x-4">
-          <li><a href="assets/html/kelas.html" class="hover:underline">Kelas</a></li>
-          <li><a href="assets/html/latihan/option.html" class="hover:underline">Latihan</a></li>
-          <li><a href="assets/html/kuis/kuis1.html" class="hover:underline">Kuis</a></li>
-          <li><a href="assets/html/profile.html" class="hover:underline">Profile</a></li>
+          <li><a href="/Tugas-Akhir/assets/html/kelas.html" class="hover:underline">Kelas</a></li>
+          <li><a href="/Tugas-Akhir/assets/html/latihan/option.html" class="hover:underline">Latihan</a></li>
+          <li><a href="/Tugas-Akhir/assets/html/kuis/kuis1.html" class="hover:underline">Kuis</a></li>
+          <li><a href="/Tugas-Akhir/assets/html/profile.html" class="hover:underline">Profile</a></li>
         </ul>
       </nav>
     </div>
@@ -63,7 +63,7 @@
     <section id="practice" class="mt-8 text-center p-8 bg-white shadow-md rounded-lg">
       <h2 class="text-2xl font-semibold">Latihan Interaktif</h2>
       <p class="mt-2">Coba kode Anda langsung di browser!</p>
-      <a href="assets/html/latihan/option.html" class="mt-4 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700">
+      <a href="/Tugas-Akhir/assets/html/latihan/option.html" class="mt-4 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700">
         Mulai Latihan
       </a>
     </section>
@@ -72,7 +72,7 @@
     <section id="quiz" class="mt-8 text-center p-8 bg-white shadow-md rounded-lg">
       <h2 class="text-2xl font-semibold">Kuis Pemrograman</h2>
       <p class="mt-2">Uji pemahaman Anda dengan kuis interaktif.</p>
-      <a href="assets/html/kuis/kuis1.html" class="mt-4 inline-block bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700">
+      <a href="/Tugas-Akhir/assets/html/kuis/kuis1.html" class="mt-4 inline-block bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700">
         Mulai Kuis
       </a>
     </section>
@@ -89,7 +89,7 @@
 
     // Muat data courses dari JSON
     document.addEventListener("DOMContentLoaded", () => {
-      fetch("assets/json/kelas.json")
+      fetch("/Tugas-Akhir/assets/json/kelas.json")
         .then(response => response.json())
         .then(data => {
           courses = data;
@@ -127,7 +127,14 @@
             </div>
             <div class="mt-2 flex items-center">
               <img src="https://img.icons8.com/fluency/48/positive-dynamic.png" alt="Level" class="w-5 mr-2">
-              <span class="${levelColorClass} text-sm">${course.level}</span>\n            </div>\n            <p class="mt-2 text-red-600 font-bold">${course.price}</p>\n            <a href="${course.link}" class="mt-4 block bg-${course.warna}-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-${course.warna}-600 transition text-center">\n              Mulai\n            </a>\n          </div>\n        `;
+              <span class="${levelColorClass} text-sm">${course.level}</span>
+            </div>
+            <p class="mt-2 text-red-600 font-bold">${course.price}</p>
+            <a href="/Tugas-Akhir/${course.link}" class="mt-4 block bg-${course.warna}-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-${course.warna}-600 transition text-center">
+              Mulai
+            </a>
+          </div>
+        `;
       }).join('');
 
       // Gandakan konten untuk membuat efek loop auto-scroll yang mulus
