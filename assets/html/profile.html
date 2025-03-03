@@ -14,13 +14,13 @@
   <!-- Header -->
   <header class="bg-blue-600 text-white p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-bold">DevCode</a>
+      <a href="/index.html" class="text-2xl font-bold">DevCode</a>
       <nav>
         <ul class="flex space-x-4">
-          <li><a href="kelas.html" class="hover:underline">Kelas</a></li>
-          <li><a href="latihan/option.html" class="hover:underline">Latihan</a></li>
-          <li><a href="kuis/kuis1.html" class="hover:underline">Kuis</a></li>
-          <li><a href="profile.html" class="hover:underline">Profil</a></li>
+          <li><a href="/assets/html/kelas.html" class="hover:underline">Kelas</a></li>
+          <li><a href="/assets/html/latihan/option.html" class="hover:underline">Latihan</a></li>
+          <li><a href="/assets/html/kuis/kuis1.html" class="hover:underline">Kuis</a></li>
+          <li><a href="/assets/html/profile.html" class="hover:underline">Profil</a></li>
           <li><a href="#" onclick="logout()" class="hover:underline">Logout</a></li>
         </ul>
       </nav>
@@ -43,7 +43,7 @@
       </div>
       <!-- Button to Edit Profile -->
       <div class="mt-6 text-center">
-        <a href="edit-profile.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700">Edit Profil</a>
+        <a href="/assets/html/edit-profile.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700">Edit Profil</a>
       </div>
     </section>
   </main>
@@ -61,7 +61,7 @@
 
       if (!token || !profile) {
         // Jika data autentikasi tidak ada, alihkan ke halaman login
-        window.location.href = "../../login.html";
+        window.location.href = "/login.html";
       } else {
         try {
           const user = JSON.parse(profile);
@@ -69,7 +69,7 @@
           document.getElementById("userEmail").textContent = user.email || "Tidak diketahui";
         } catch (error) {
           console.error("Error parsing auth0_profile:", error);
-          window.location.href = "../../login.html";
+          window.location.href = "/login.html";
         }
       }
     });
@@ -79,7 +79,7 @@
       sessionStorage.removeItem("auth0_token");
       sessionStorage.removeItem("auth0_profile");
       alert("Anda telah logout.");
-      window.location.href = "../../login.html";
+      window.location.href = "/login.html";
     }
   </script>
 </body>
